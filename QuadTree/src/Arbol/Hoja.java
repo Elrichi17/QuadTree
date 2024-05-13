@@ -4,8 +4,7 @@ public class Hoja extends AbstractNode {
 
 	private boolean color;
 
-	public Hoja(Comparable llave, boolean color) {
-		super(llave);
+	public Hoja(boolean color) {
 		this.color = color;
 	}
 
