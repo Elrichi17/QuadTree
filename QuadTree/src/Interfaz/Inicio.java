@@ -52,6 +52,10 @@ public void initialize() {
 //                           ImageIO.write( (BufferedImage) image, "jpg", chosenFile); 
                            
                            JOptionPane.showMessageDialog(null, "Imagen seleccionada exitosamente!", "Exito", JOptionPane.INFORMATION_MESSAGE);
+                           PagPrincipal pagprincipal= new PagPrincipal(image);
+                           pagprincipal.setVisible(true);
+                           setVisible(false);
+                           
                        } catch (IOException ex) {
                            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al leer la imagen", "Error", JOptionPane.ERROR_MESSAGE);
                        }

@@ -1,11 +1,11 @@
 package Arbol;
 
-public class Node<E> extends AbstractNode{
+public class Node extends AbstractNode{
 
-	private AbstractNode[] hijos = new AbstractNode[4];
+	private AbstractNode[] hijos ;
 	
-	public Node(AbstractNode[] hijos) {
-		this.hijos = hijos;
+	public Node() {
+		this.hijos = new AbstractNode[4]; ;
 	}
 
 	public AbstractNode[] getHijos() {
@@ -16,5 +16,5 @@ public class Node<E> extends AbstractNode{
 		this.hijos = hijos;
 	}
 	
-	
+
 }
