@@ -12,8 +12,18 @@ public class Node extends AbstractNode{
 		return hijos;
 	}
 
-	public void setHijos(AbstractNode[] hijos) {
-		this.hijos = hijos;
+
+	public void setHijoNO(AbstractNode hijo) {
+		this.hijos[0] = hijo;
+	}
+	public void setHijoNE(AbstractNode hijo) {
+		this.hijos[1] = hijo;
+	}
+	public void setHijoSE(AbstractNode hijo) {
+		this.hijos[2] = hijo;
+	}
+	public void setHijoSO(AbstractNode hijo) {
+		this.hijos[3] = hijo;
 	}
 	
 
