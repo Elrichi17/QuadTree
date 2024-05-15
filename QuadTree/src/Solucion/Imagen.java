@@ -34,7 +34,7 @@ public class Imagen {
                     int green = (rgb >> 8) & 0xFF;
                     int blue = (rgb) & 0xFF;
                     int gray = (red + green + blue) / 3;
-                    boolArray[y][x] = gray < 128;
+                    boolArray[y][x] = gray > 128;
                 }
             }
             generatedImage = convertBooleanArrayToImage(boolArray);
@@ -68,7 +68,7 @@ public class Imagen {
     }
 
     public static void main(String[] args) {
-    	Imagen converter = new Imagen("example.jpg");
+    	Imagen converter = new Imagen("example.png");
         boolean[][] boolArray = converter.getBoolArray();
         BufferedImage generatedImage = converter.getGeneratedImage();
 
