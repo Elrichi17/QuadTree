@@ -1,5 +1,5 @@
-package Arbol;
+package Solucion;
 
 public class ArbolQT {
-
+ 
 }

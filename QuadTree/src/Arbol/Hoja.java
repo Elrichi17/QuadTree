@@ -1,11 +1,17 @@
 package Arbol;
 
-public class Hoja extends Nodo {
+public class Hoja extends AbstractNode {
 
+//attributes
 	private boolean color;
-	
-	
-	public void print() {
-		System.out.println(this.color);
+
+//constructors
+	public Hoja(boolean color) {
+		this.color = color;
 	}
+
+//accessors
+	public boolean isColor() {
+		return color;
+	}	
 }
