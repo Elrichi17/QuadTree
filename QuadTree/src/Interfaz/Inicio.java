@@ -43,7 +43,7 @@ public void initialize() {
             	 File chosenFile = fileChooser.getSelectedFile();
             	   String fileName = chosenFile.getName();
                    String extension = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
-
+String i= chosenFile.getPath();
                    if (extension.equals("jpg") || extension.equals("jpeg") || extension.equals("png")) {
                        try {
                            //lee la imagen
@@ -52,7 +52,7 @@ public void initialize() {
 //                           ImageIO.write( (BufferedImage) image, "jpg", chosenFile); 
                            
                            JOptionPane.showMessageDialog(null, "Imagen seleccionada exitosamente!", "Exito", JOptionPane.INFORMATION_MESSAGE);
-                           PagPrincipal pagprincipal= new PagPrincipal(image);
+                           PagPrincipal pagprincipal= new PagPrincipal(chosenFile.getPath());
                            pagprincipal.setVisible(true);
                            setVisible(false);
                            
