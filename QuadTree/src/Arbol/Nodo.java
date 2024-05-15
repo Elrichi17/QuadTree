@@ -1,6 +1,6 @@
 package Arbol;
 
-public class Nodo {
+public abstract class Nodo {
 
-	public void print();
+	public abstract void print();
 }
