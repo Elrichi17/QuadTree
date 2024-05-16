@@ -68,14 +68,14 @@ public class ArbolQT {
 	public void construirQuadtree(boolean[][] MatrizImagen) {
 		Quadtree.setRaiz(construirQuadtree(MatrizImagen, MatrizImagen[0].length, MatrizImagen.length, 0, 0));
 	}
-	public void asignarACadaPixel(int ancho, int alto, int x, int y,boolean valor) {
-		for (int i = y; i < y + alto; i++) {
-			for (int j = x; j < x + ancho; j++) {
-				matrizImagen[i][j]=valor;
-
-			}
-		}
+	public void asignarACadaPixel(int ancho, int alto, int x, int y, boolean valor) {
+	    for (int i = y; i < y + alto && i < matrizImagen.length; i++) {
+	        for (int j = x; j < x + ancho && j < matrizImagen[0].length; j++) {
+	            matrizImagen[i][j] = valor;
+	        }
+	    }
 	}
+
 	public void construirImagen(AbstractNode raiz, int ancho, int alto, int x, int y){
 		if(raiz==null|| ancho == 0 || alto == 0) {
 			return;
@@ -105,16 +105,16 @@ public class ArbolQT {
 
 		//		Imagen converter = new Imagen("jin.jpg");
 		//		boolean[][] boolArray = converter.getBoolArray();
-		boolean[][] matriz = {
-				{true, true, true, true, true, true, false, false},
-				{true, true, true, true, true, true, false, false},
-				{true, true, true, true, false, false, true, true},
-				{true, true, true, true, false, false, true, true},
-				{true, true, false, false, true, true, true, true},
-				{true, true, false, false, true, false, false, false},
-				{false, false, true, true, true, false, true, true},
-				{false, false, true, true, true, false, true, false}
-		};
+//		boolean[][] matriz = {
+//				{true, true, true, true, true, true, false, false},
+//				{true, true, true, true, true, true, false, false},
+//				{true, true, true, true, false, false, true, true},
+//				{true, true, true, true, false, false, true, true},
+//				{true, true, false, false, true, true, true, true},
+//				{true, true, false, false, true, false, false, false},
+//				{false, false, true, true, true, false, true, true},
+//				{false, false, true, true, true, false, true, false}
+//		};
 		//	boolean[][] matriz = {
 		//			{false, false, true, true, },
 		//			{false, false, true, true, },
@@ -132,10 +132,21 @@ public class ArbolQT {
 		//				{false, false, true, true, },
 		//
 		//		};
-		//		boolean[][] matriz = {
-		//				{false, false, true },
-		//				{false, false, true },
-		//		};
+				boolean[][] matriz = {
+						{false, false, true },
+						{false, false, true },
+						{false, false, true },
+						{false, false, true },
+						{false, false, true },
+						{false, false, true },
+						{false, false, true },
+						{false, false, true },
+						{false, false, true },
+						{false, false, true },
+						{false, false, true },
+						{false, false, true },
+						{false, false, true },
+				};
 		ArbolQT arbol= new ArbolQT(matriz.length,matriz[0].length);
 
 
