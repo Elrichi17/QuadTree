@@ -20,6 +20,7 @@ public class Imagen {
     }
 
 //operations
+    
     private void loadImage(String imagePath) {
         try {
             originalImage = ImageIO.read(new File(imagePath));
@@ -43,15 +44,25 @@ public class Imagen {
         }
     }
 
-    public boolean[][] getBoolArray() {
+    public BufferedImage getOriginalImage() {
+		return originalImage;
+	}
+
+	public boolean[][] getBoolArray() {
         return boolArray;
     }
 
     public BufferedImage getGeneratedImage() {
         return generatedImage;
     }
+    public int getWidth() {
+        return originalImage.getWidth();
+    }
 
-    private BufferedImage convertBooleanArrayToImage(boolean[][] boolArray) {
+    public int getHeight() {
+        return originalImage.getHeight();
+    }
+    public BufferedImage convertBooleanArrayToImage(boolean[][] boolArray) {
         int height = boolArray.length;
         int width = boolArray[0].length;
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_BINARY);
