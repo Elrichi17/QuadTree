@@ -5,10 +5,12 @@ import java.awt.*;
 
 
 import javax.swing.border.*;
+import javax.swing.tree.DefaultMutableTreeNode;
 
-import Arbol.AbstractNode;
-import Solucion.ArbolQT;
-import Solucion.Imagen;
+import Arbol.*;
+
+import Solucion.*;
+
 
 import javax.swing.*;
 
@@ -47,14 +49,47 @@ public  void initialize() {
      
      //crear el arbol
      boolean[][] MatrizImagen= imagenATratar.getBoolArray();
+ 
      arbol.construirQuadtree(MatrizImagen);
      AbstractNode raiz= arbol.getQuadtree().getRaiz();
      
-     JTree tree = new JTree();
-     tree.setBounds(440, 10, 453, 256);
-     panel.add(tree);
-     
+     JTree tree = CrearArbol();
+
+     // Create a JScrollPane and add the JTree
+     JScrollPane scrollPane = new JScrollPane(tree);
+     scrollPane.setBounds(440, 10, 453, 256); // Adjust scroll pane position and size
+
+     panel.add(scrollPane);
      
  
+}
+public JTree CrearArbol() {
+    AbstractNode raiz = arbol.getQuadtree().getRaiz();
+    if (raiz != null) {
+        DefaultMutableTreeNode jRaiz = new DefaultMutableTreeNode(raiz);
+        return new JTree(crearSubArbol(raiz, jRaiz));
+    } else {
+        
+        return new JTree();
+    }
+}
+
+private DefaultMutableTreeNode crearSubArbol(AbstractNode raiz, DefaultMutableTreeNode jRaiz) {
+    if (raiz instanceof Hoja) {
+        jRaiz.add(new DefaultMutableTreeNode("Hoja: " + ((((Hoja) raiz).isColor())?'B':'N')));
+    } else {
+        Node node = (Node) raiz;
+        jRaiz.add(new DefaultMutableTreeNode("Padre"));
+
+       
+        for (int i = 0; i < 4; i++) {
+            if (node.getHijos()[i] != null) {
+                jRaiz.add(crearSubArbol(node.getHijos()[i], new DefaultMutableTreeNode("Node " + (i + 1))));
+            } else {
+                jRaiz.add(new DefaultMutableTreeNode("Null"));
+            }
+        }
+    }
+    return jRaiz;
 }
 }
