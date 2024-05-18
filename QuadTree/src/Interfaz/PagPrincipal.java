@@ -15,113 +15,129 @@ import Solucion.*;
 
 public class PagPrincipal extends JFrame {
 
-    private String imagen;
-    private ArbolQT arbol;
-    private BufferedImage bufferedImage;
+	private String imagen;
+	private ArbolQT arbol;
+	private BufferedImage bufferedImage;
 
-    public PagPrincipal(String imagen) {
-        this.imagen = imagen;
-        initialize();
-    }
+	public PagPrincipal(String imagen) {
+		this.imagen = imagen;
+		try{
+			initialize();
+		}    catch (IOException e) {
+			JOptionPane.showMessageDialog(this, "Error al procesar la imagen", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
 
-    public void initialize() {
-        this.setSize(929, 692);
+	public void initialize() throws IOException {
+		this.setTitle("Quadtree Image Processor");
+		this.setSize(1000, 800);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLayout(new BorderLayout());
 
-        JPanel panel = new JPanel();
-        panel.setBackground(Color.RED);
-        panel.setForeground(Color.WHITE);
-        panel.setBounds(-10, 0, 446, 263);
-        getContentPane().add(panel);
-        panel.setLayout(null);
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
+		panel.setLayout(new BorderLayout());
+		getContentPane().add(panel, BorderLayout.CENTER);
 
-        // importante (todo lo relacionado a arbol y imagen)
-        Imagen imagenATratar = new Imagen(imagen);
+		// Importante (todo lo relacionado a arbol y imagen)
+		Imagen imagenATratar = new Imagen(imagen);
 
-        // se inicializa el arbol
-        this.arbol = new ArbolQT(imagenATratar.getHeight(), imagenATratar.getHeight());
+		// Se inicializa el arbol
+		this.arbol = new ArbolQT(imagenATratar.getHeight(), imagenATratar.getWidth());
 
-        // código imagen mostrada
-        JLabel lblNewLabel = new JLabel("");
-        lblNewLabel.setBounds(10, 10, 296, 209);
-        ImageIcon imageIcon = new ImageIcon(imagen);
-        Image image = imageIcon.getImage().getScaledInstance(lblNewLabel.getWidth(), lblNewLabel.getHeight(), Image.SCALE_SMOOTH);
-        imageIcon = new ImageIcon(image);
-        lblNewLabel.setIcon(imageIcon);
-        panel.add(lblNewLabel);
+		// Código imagen mostrada
+		JPanel imagePanel = new JPanel();
+		imagePanel.setLayout(new GridLayout(2, 1, 10, 10));
+		imagePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        // creación del arbol
-        boolean[][] MatrizImagen = imagenATratar.getBoolArray();
-        arbol.construirQuadtree(MatrizImagen);
-        arbol.getMatrizImagen();
-        JTree tree = CrearArbol();
-        JScrollPane scrollPane = new JScrollPane(tree);
-        scrollPane.setBounds(440, 10, 453, 256);
-        panel.add(scrollPane);
+		JLabel lblOriginalImage = new JLabel("Imagen Original", JLabel.CENTER);
+		lblOriginalImage.setVerticalTextPosition(JLabel.BOTTOM);
+		lblOriginalImage.setHorizontalTextPosition(JLabel.CENTER);
+		ImageIcon imageIcon = new ImageIcon(imagen);
+		Image image = imageIcon.getImage().getScaledInstance(400, 400, Image.SCALE_SMOOTH);
+		imageIcon = new ImageIcon(image);
+		lblOriginalImage.setIcon(imageIcon);
+		imagePanel.add(lblOriginalImage);
 
-        // nada importante, solo probando
-        System.out.println(MatrizImagen.length);
-        System.out.println(MatrizImagen[0].length);
-        System.out.println(arbol.getContadorHojas());
+		// Creación del arbol
+		boolean[][] MatrizImagen = imagenATratar.getBoolArray();
+		arbol.construirQuadtree(MatrizImagen);
 
-        // creación de la imagen a partir de la matriz
-        AbstractNode raiz = arbol.getQuadtree().getRaiz();
-        arbol.construirImagen(raiz, MatrizImagen[0].length, MatrizImagen.length, 0, 0);
-        JLabel lblNewLabel_1 = new JLabel("");
-        lblNewLabel_1.setBounds(365, 410, 296, 209);
-        
-        bufferedImage = imagenATratar.convertBooleanArrayToImage(arbol.getMatrizImagen());
-        ImageIcon imageIcon2 = new ImageIcon(bufferedImage);
+		// Creación de la imagen a partir de la matriz
+		AbstractNode raiz = arbol.getQuadtree().getRaiz();
+		arbol.construirImagen(raiz, MatrizImagen[0].length, MatrizImagen.length, 0, 0);
 
-        Image image2 = imageIcon2.getImage().getScaledInstance(lblNewLabel_1.getWidth(), lblNewLabel_1.getHeight(), Image.SCALE_SMOOTH);
-        imageIcon2 = new ImageIcon(image2);
-        lblNewLabel_1.setIcon(imageIcon2);
-        panel.add(lblNewLabel_1);
+		JLabel lblProcessedImage = new JLabel("Imagen Procesada", JLabel.CENTER);
+		lblProcessedImage.setVerticalTextPosition(JLabel.BOTTOM);
+		lblProcessedImage.setHorizontalTextPosition(JLabel.CENTER);
+		bufferedImage = imagenATratar.convertBooleanArrayToImage(arbol.getMatrizImagen());
+		ImageIcon imageIcon2 = new ImageIcon(bufferedImage);
+		Image image2 = imageIcon2.getImage().getScaledInstance(400, 400, Image.SCALE_SMOOTH);
+		imageIcon2 = new ImageIcon(image2);
+		lblProcessedImage.setIcon(imageIcon2);
+		imagePanel.add(lblProcessedImage);
 
-        JButton botonDescargar = new JButton("Descargar Imagen");
-        botonDescargar.setBounds(10, 230, 200, 30); 
-        botonDescargar.addActionListener(e -> guardarImagen());
-        panel.add(botonDescargar);
+		panel.add(imagePanel, BorderLayout.CENTER);
 
-        add(panel);
-    }
+		// Creación del árbol
+		JTree tree = CrearArbol();
+		JScrollPane scrollPane = new JScrollPane(tree);
+		scrollPane.setPreferredSize(new Dimension(200, 800));
+		panel.add(scrollPane, BorderLayout.WEST);
 
-    public void guardarImagen() {
-        File archivoDestino = new File("C:\\Users\\USUARIO\\Downloads\\imagen_generada.jpg");
+		// Botón de descarga
+		JButton botonDescargar = new JButton("Descargar Imagen");
+	
+		botonDescargar.addActionListener(e -> guardarImagen());
+		panel.add(botonDescargar, BorderLayout.SOUTH);
+	}
+	public void guardarImagen() {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle("Guardar Imagen");
+		fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("JPEG Image", "jpg"));
 
-        try {
-            ImageIO.write(bufferedImage, "jpg", archivoDestino);
-            JOptionPane.showMessageDialog(this, "Imagen guardada correctamente como imagen_generada.jpg", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        } catch (IOException e) {
-            //e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al guardar la imagen", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+		int userSelection = fileChooser.showSaveDialog(this);
+		if (userSelection == JFileChooser.APPROVE_OPTION) {
+			File archivoDestino = fileChooser.getSelectedFile();
+			if (!archivoDestino.getAbsolutePath().endsWith(".jpg")) {
+				archivoDestino = new File(archivoDestino + ".jpg");
+			}
 
-    public JTree CrearArbol() {
-        AbstractNode raiz = arbol.getQuadtree().getRaiz();
-        if (raiz != null) {
-            DefaultMutableTreeNode jRaiz = new DefaultMutableTreeNode(raiz);
-            return new JTree(crearSubArbol(raiz, jRaiz));
-        } else {
-            return new JTree();
-        }
-    }
+			try {
+				ImageIO.write(bufferedImage, "jpg", archivoDestino);
+				JOptionPane.showMessageDialog(this, "Imagen guardada correctamente como " + archivoDestino.getName(), "Éxito", JOptionPane.INFORMATION_MESSAGE);
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(this, "Error al guardar la imagen", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
 
-    private DefaultMutableTreeNode crearSubArbol(AbstractNode raiz, DefaultMutableTreeNode jRaiz) {
-        if (raiz instanceof Hoja) {
-            jRaiz.add(new DefaultMutableTreeNode("Hoja: " + ((((Hoja) raiz).isColor()) ? 'B' : 'N')));
-        } else {
-            Node node = (Node) raiz;
-            jRaiz.add(new DefaultMutableTreeNode("Padre"));
 
-            for (int i = 0; i < 4; i++) {
-                if (node.getHijos()[i] != null) {
-                    jRaiz.add(crearSubArbol(node.getHijos()[i], new DefaultMutableTreeNode("Node " + (i + 1))));
-                } else {
-                    jRaiz.add(new DefaultMutableTreeNode("Null"));
-                }
-            }
-        }
-        return jRaiz;
-    }
+	public JTree CrearArbol() {
+		AbstractNode raiz = arbol.getQuadtree().getRaiz();
+		if (raiz != null) {
+			DefaultMutableTreeNode jRaiz = new DefaultMutableTreeNode(raiz);
+			return new JTree(crearSubArbol(raiz, jRaiz));
+		} else {
+			return new JTree();
+		}
+	}
+
+	private DefaultMutableTreeNode crearSubArbol(AbstractNode raiz, DefaultMutableTreeNode jRaiz) {
+		if (raiz instanceof Hoja) {
+			jRaiz.add(new DefaultMutableTreeNode("Hoja: " + ((((Hoja) raiz).isColor()) ? 'B' : 'N')));
+		} else {
+			Node node = (Node) raiz;
+			jRaiz.add(new DefaultMutableTreeNode("Padre"));
+
+			for (int i = 0; i < 4; i++) {
+				if (node.getHijos()[i] != null) {
+					jRaiz.add(crearSubArbol(node.getHijos()[i], new DefaultMutableTreeNode("Node " + (i + 1))));
+				} else {
+					jRaiz.add(new DefaultMutableTreeNode("Null"));
+				}
+			}
+		}
+		return jRaiz;
+	}
 }

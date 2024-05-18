@@ -46,16 +46,18 @@ public class Inicio extends JFrame  {
 					String extension = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
 				
 					if (extension.equals("jpg") || extension.equals("jpeg") || extension.equals("png")) {
-
-
-						JOptionPane.showMessageDialog(null, "Imagen seleccionada exitosamente!", "Exito", JOptionPane.INFORMATION_MESSAGE);
-						PagPrincipal pagprincipal= new PagPrincipal(chosenFile.getPath());
-						pagprincipal.setVisible(true);
-						setVisible(false);
-
-					} else {
-						JOptionPane.showMessageDialog(null, "El archivo seleccionado no es una imagen válida", "Error", JOptionPane.ERROR_MESSAGE);
-					}
+                        try {
+                            JOptionPane.showMessageDialog(null, "Imagen seleccionada exitosamente!", "Exito", JOptionPane.INFORMATION_MESSAGE);
+                            PagPrincipal pagprincipal = new PagPrincipal(chosenFile.getPath());
+                            pagprincipal.setVisible(true);
+                            setVisible(false);
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(null, "Error al abrir la imagen seleccionada", "Error", JOptionPane.ERROR_MESSAGE);
+                            ex.printStackTrace();
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "El archivo seleccionado no es una imagen válida", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
 				}
 			}
 
@@ -64,9 +66,6 @@ public class Inicio extends JFrame  {
 		panel.add(btnNewButton);
 
 	}
-
-
-
 
 
 	public static void main(String[] args) {

@@ -10,15 +10,13 @@ import Arbol.Node;
 public class ArbolQT {
 	private Arbol Quadtree;
 	private boolean [][] matrizImagen;
-	private int contadorHojas;
+	
 
-
-	//private imgen
 
 	public ArbolQT(int alto, int ancho) {
 		this.Quadtree= new Arbol(null);
 		this.matrizImagen= new boolean[alto][ancho];
-		this.contadorHojas=0;
+	
 
 	}
 	public Arbol getQuadtree() {
@@ -50,7 +48,6 @@ public class ArbolQT {
 		}
 		if (!tieneColorDiferente(MatrizImagen, ancho, alto, x, y)) {
 			Hoja hoja = new Hoja(MatrizImagen[y][x]);
-			contadorHojas++;
 			return hoja;
 		}
 		int mitadAncho = ancho / 2;
@@ -68,6 +65,7 @@ public class ArbolQT {
 	public void construirQuadtree(boolean[][] MatrizImagen) {
 		Quadtree.setRaiz(construirQuadtree(MatrizImagen, MatrizImagen[0].length, MatrizImagen.length, 0, 0));
 	}
+	
 	public void asignarACadaPixel(int ancho, int alto, int x, int y, boolean valor) {
 	    for (int i = y; i < y + alto && i < matrizImagen.length; i++) {
 	        for (int j = x; j < x + ancho && j < matrizImagen[0].length; j++) {
@@ -94,70 +92,9 @@ public class ArbolQT {
 
 		}
 	}
-
-
-
-	public int getContadorHojas() {
-		return contadorHojas;
-	}
-
-	public static void main(String[] args) {
-
-		//		Imagen converter = new Imagen("jin.jpg");
-		//		boolean[][] boolArray = converter.getBoolArray();
-//		boolean[][] matriz = {
-//				{true, true, true, true, true, true, false, false},
-//				{true, true, true, true, true, true, false, false},
-//				{true, true, true, true, false, false, true, true},
-//				{true, true, true, true, false, false, true, true},
-//				{true, true, false, false, true, true, true, true},
-//				{true, true, false, false, true, false, false, false},
-//				{false, false, true, true, true, false, true, true},
-//				{false, false, true, true, true, false, true, false}
-//		};
-		//	boolean[][] matriz = {
-		//			{false, false, true, true, },
-		//			{false, false, true, true, },
-		//			{true, true, false, false, },
-		//		    {true, true, false, false, },
-		//		    
-		//		};
-
-		//		boolean[][] matriz = {
-		//				{false, false, true, true, },
-		//				{false, false, true, true, },
-		//				{true, true, false, false, },
-		//				{true, true, false, false, },
-		//				{false, false, true, true, },
-		//				{false, false, true, true, },
-		//
-		//		};
-				boolean[][] matriz = {
-						{false, false, true },
-						{false, false, true },
-						{false, false, true },
-						{false, false, true },
-						{false, false, true },
-						{false, false, true },
-						{false, false, true },
-						{false, false, true },
-						{false, false, true },
-						{false, false, true },
-						{false, false, true },
-						{false, false, true },
-						{false, false, true },
-				};
-		ArbolQT arbol= new ArbolQT(matriz.length,matriz[0].length);
-
-
-		arbol.construirQuadtree(matriz);
-		arbol.construirImagen(arbol.getQuadtree().getRaiz(),  matriz[0].length, matriz.length, 0, 0);
-		arbol.getMatrizImagen();
-	}
+	
 	public boolean[][] getMatrizImagen() {
-		return matrizImagen;
-	}
-
-
+	return matrizImagen;
+}
 
 }
