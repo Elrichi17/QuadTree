@@ -22,6 +22,10 @@ public class ArbolQT {
 	public Arbol getQuadtree() {
 		return Quadtree;
 	}
+	public boolean[][] getMatrizImagen() {
+	return matrizImagen;
+}
+
 	public boolean tieneColorDiferente(boolean[][] MatrizImagen, int ancho, int alto, int x, int y) {
 		boolean tieneTrue = false;
 		boolean tieneFalse = false;
@@ -74,7 +78,7 @@ public class ArbolQT {
 	    }
 	}
 
-	public void construirImagen(AbstractNode raiz, int ancho, int alto, int x, int y){
+	public void construirMatriz(AbstractNode raiz, int ancho, int alto, int x, int y){
 		if(raiz==null|| ancho == 0 || alto == 0) {
 			return;
 		}
@@ -85,16 +89,13 @@ public class ArbolQT {
 			int mitadAncho = ancho / 2;
 			int mitadAlto = alto / 2;
 
-			construirImagen(((Node) raiz).getHijos()[0], mitadAncho, mitadAlto, x, y);
-			construirImagen(((Node) raiz).getHijos()[1], ancho - mitadAncho, mitadAlto, x + mitadAncho, y);
-			construirImagen(((Node) raiz).getHijos()[2], ancho - mitadAncho, alto - mitadAlto, x + mitadAncho, y + mitadAlto);
-			construirImagen(((Node) raiz).getHijos()[3], mitadAncho, alto - mitadAlto, x, y + mitadAlto);
+			construirMatriz(((Node) raiz).getHijos()[0], mitadAncho, mitadAlto, x, y);
+			construirMatriz(((Node) raiz).getHijos()[1], ancho - mitadAncho, mitadAlto, x + mitadAncho, y);
+			construirMatriz(((Node) raiz).getHijos()[2], ancho - mitadAncho, alto - mitadAlto, x + mitadAncho, y + mitadAlto);
+			construirMatriz(((Node) raiz).getHijos()[3], mitadAncho, alto - mitadAlto, x, y + mitadAlto);
 
 		}
 	}
 	
-	public boolean[][] getMatrizImagen() {
-	return matrizImagen;
-}
 
 }

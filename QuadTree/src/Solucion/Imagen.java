@@ -10,19 +10,18 @@ public class Imagen {
 	
 
 //attributes
-	private BufferedImage originalImage;
+	private BufferedImage originalImage;	
     private boolean[][] boolArray;
-    private BufferedImage generatedImage;
 
 //constructors
-    public Imagen(String imagePath) {
+    public Imagen(String imagePath) throws IOException {
         loadImage(imagePath);
     }
 
 //operations
     
-    private void loadImage(String imagePath) {
-        try {
+    private void loadImage(String imagePath) throws IOException {
+    
             originalImage = ImageIO.read(new File(imagePath));
             int width = originalImage.getWidth();
             int height = originalImage.getHeight();
@@ -38,10 +37,6 @@ public class Imagen {
                     boolArray[y][x] = gray > 128;
                 }
             }
-            generatedImage = convertBooleanArrayToImage(boolArray);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public BufferedImage getOriginalImage() {
@@ -52,9 +47,6 @@ public class Imagen {
         return boolArray;
     }
 
-    public BufferedImage getGeneratedImage() {
-        return generatedImage;
-    }
     public int getWidth() {
         return originalImage.getWidth();
     }
@@ -78,17 +70,5 @@ public class Imagen {
         return image;
     }
 
-    public static void main(String[] args) {
-    	Imagen converter = new Imagen("example.png");
-        boolean[][] boolArray = converter.getBoolArray();
-        BufferedImage generatedImage = converter.getGeneratedImage();
-
-        try {
-            ImageIO.write(generatedImage, "png", new File("output.png"));
-            System.out.println("Image saved successfully.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 }

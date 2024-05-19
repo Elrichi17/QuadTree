@@ -6,8 +6,7 @@ public class Arbol {
 	private AbstractNode raiz;
 
 //constructors
-	public Arbol(AbstractNode raiz) {
-		super();
+	public Arbol(AbstractNode raiz) {	
 		this.raiz = raiz;
 	}
 

@@ -65,7 +65,7 @@ public class PagPrincipal extends JFrame {
 
 		// Creación de la imagen a partir de la matriz
 		AbstractNode raiz = arbol.getQuadtree().getRaiz();
-		arbol.construirImagen(raiz, MatrizImagen[0].length, MatrizImagen.length, 0, 0);
+		arbol.construirMatriz(raiz, MatrizImagen[0].length, MatrizImagen.length, 0, 0);
 
 		JLabel lblProcessedImage = new JLabel("Imagen Procesada", JLabel.CENTER);
 		lblProcessedImage.setVerticalTextPosition(JLabel.BOTTOM);
