@@ -65,12 +65,12 @@ public class PagPrincipal extends JFrame {
 
 		// Creación de la imagen a partir de la matriz
 		AbstractNode raiz = arbol.getQuadtree().getRaiz();
-		arbol.construirMatriz(raiz, MatrizImagen[0].length, MatrizImagen.length, 0, 0);
+		boolean[][] matriz = arbol.construirMatriz();
 
 		JLabel lblProcessedImage = new JLabel("Imagen Procesada", JLabel.CENTER);
 		lblProcessedImage.setVerticalTextPosition(JLabel.BOTTOM);
 		lblProcessedImage.setHorizontalTextPosition(JLabel.CENTER);
-		bufferedImage = imagenATratar.convertBooleanArrayToImage(arbol.getMatrizImagen());
+		bufferedImage = imagenATratar.convertBooleanArrayToImage(matriz);
 		ImageIcon imageIcon2 = new ImageIcon(bufferedImage);
 		Image image2 = imageIcon2.getImage().getScaledInstance(400, 400, Image.SCALE_SMOOTH);
 		imageIcon2 = new ImageIcon(image2);
