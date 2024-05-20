@@ -97,16 +97,5 @@ public class ArbolQT {
 		}
 	}
 	
-	public static void main(String[] args) {
-		ArbolQT arbol= new ArbolQT(0, 0);
-		boolean[][] matriz=  {
-	            {true, false, true, false},
-	            {false, true, false, false},
-	           
-	            
-	        };
-		arbol.construirQuadtree(matriz);
-	
 
-		}
 }
