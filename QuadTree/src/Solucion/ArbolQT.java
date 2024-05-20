@@ -29,8 +29,8 @@ public class ArbolQT {
 	public boolean tieneColorDiferente(boolean[][] MatrizImagen, int ancho, int alto, int x, int y) {
 		boolean tieneTrue = false;
 		boolean tieneFalse = false;
-
-		for (int i = y; i < y + alto; i++) {
+		boolean flag=false;
+		for (int i = y; i < y + alto&& !(flag); i++) {
 			for (int j = x; j < x + ancho; j++) {
 				if (MatrizImagen[i][j] == false) {
 					tieneFalse = true;
@@ -38,12 +38,12 @@ public class ArbolQT {
 					tieneTrue = true;
 				}
 				if (tieneTrue && tieneFalse) {
-					return true;
+					flag=true;
 				}
 			}
 		}
-
-		return false;
+		
+		return flag;
 	}
 
 	public AbstractNode construirQuadtree(boolean[][] MatrizImagen, int ancho, int alto, int x, int y) {
@@ -97,5 +97,16 @@ public class ArbolQT {
 		}
 	}
 	
+	public static void main(String[] args) {
+		ArbolQT arbol= new ArbolQT(0, 0);
+		boolean[][] matriz=  {
+	            {true, false, true, false},
+	            {false, true, false, false},
+	           
+	            
+	        };
+		arbol.construirQuadtree(matriz);
+	
 
+		}
 }

@@ -34,7 +34,7 @@ public class Imagen {
                     int green = (rgb >> 8) & 0xFF;
                     int blue = (rgb) & 0xFF;
                     int gray = (red + green + blue) / 3;
-                    boolArray[y][x] = gray > 128;
+                    boolArray[y][x] = gray > 128;//esto devuelve true o false
                 }
             }
     }
